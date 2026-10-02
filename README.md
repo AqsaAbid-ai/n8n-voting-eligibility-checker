@@ -6,7 +6,7 @@ An n8n workflow that takes an age from a form and tells the user whether they ar
 1. A form collects the user's age
 2. The workflow checks the age and shows one of four results:
    - 0 or below: invalid age
-   - Below 18: not eligible
+   - 1 to 17: not eligible
    - 18 to 119: eligible
    - 120 or more: beyond the normal human age range
 
