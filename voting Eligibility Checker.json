@@ -1,0 +1,273 @@
+{
+  "name": "voting Eligibility Checker",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "voting eligibility checker",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Enter your age",
+              "fieldType": "number",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        -352,
+        -96
+      ],
+      "id": "f98c5425-1f0f-4162-8374-70b6004b9d9c",
+      "name": "age collecter",
+      "webhookId": "435b3402-b241-4ded-ab6e-3cbfda653363"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "55ea4f27-b772-4da6-933f-76e1a83e24a6",
+              "leftValue": "={{ $json['Enter your age'] }}",
+              "rightValue": 17,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        32,
+        -192
+      ],
+      "id": "c28450c9-c782-4872-a399-3ecdf293fd92",
+      "name": "18 above"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "you are eligible for voting",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        464,
+        -240
+      ],
+      "id": "af3596ef-984d-4569-a693-3cfd197a9f98",
+      "name": "response for eligible candidate",
+      "webhookId": "f66cef69-e494-4b0a-93ef-d1ec0b48df70"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "48159c10-3861-4743-9262-c6cb55b8d31a",
+              "leftValue": "={{ $json['Enter your age'] }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -176,
+        -96
+      ],
+      "id": "e7363831-41fb-4688-b761-5ab183decf68",
+      "name": "if age is valid or not"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "sorry !you are not eligible for voting",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        320,
+        48
+      ],
+      "id": "1c1cdf83-33cb-4e46-a6c7-f3e5a8f18213",
+      "name": "response for ineligible candidate1",
+      "webhookId": "f66cef69-e494-4b0a-93ef-d1ec0b48df70"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "37941813-274b-4595-93b2-76ee65ca580a",
+              "leftValue": "={{ $json['Enter your age'] }}",
+              "rightValue": 120,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        240,
+        -160
+      ],
+      "id": "47b89253-fd38-4f17-9e57-a9c30f44eda2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Humans cant live above 120 of age",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        480,
+        -32
+      ],
+      "id": "97f2fb10-6501-47fc-8253-bb2478825a98",
+      "name": "response for beyond age group of 120",
+      "webhookId": "f66cef69-e494-4b0a-93ef-d1ec0b48df70"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Enter the valid age",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        48,
+        0
+      ],
+      "id": "3b908f06-c930-423a-981c-13aac23d737c",
+      "name": "if age is below zero",
+      "webhookId": "8a04a0fb-c8c7-49ad-97e5-ea6fdfe12ba5"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "age collecter": {
+      "main": [
+        [
+          {
+            "node": "if age is valid or not",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "18 above": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "response for ineligible candidate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if age is valid or not": {
+      "main": [
+        [
+          {
+            "node": "18 above",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "if age is below zero",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "response for eligible candidate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "response for beyond age group of 120",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "95bc7a05-0533-4989-b853-9301bc63095b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "209f36ead64ba0b81d550517708a9154cb34f59bfe1d99a774f9208c567aed45"
+  },
+  "nodeGroups": [],
+  "id": "4zsb14gLvmY1iEhp",
+  "tags": []
+}
